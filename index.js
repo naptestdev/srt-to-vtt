@@ -3,6 +3,9 @@ const app = express();
 require("dotenv/config");
 const { convert } = require("subtitle-converter");
 const axios = require("axios").default;
+const cors = require("cors");
+
+app.use(cors({ origin: true }));
 
 app.get("/", async (req, res) => {
   try {
@@ -17,6 +20,8 @@ app.get("/", async (req, res) => {
     const { subtitle, status } = convert(response.data, ".vtt");
 
     if (!status.success) return res.status(400).send("Cannot convert");
+
+    res.setHeader("content-type", "text/vtt");
 
     res.send(subtitle);
   } catch (error) {
