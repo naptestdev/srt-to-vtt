@@ -12,7 +12,7 @@ app.get("/", async (req, res) => {
     if (!req.query.url)
       return res.send("SRT to VTT Proxy. Params url is required");
 
-    const response = await axios.get(req.query.url);
+    const response = await axios.get(encodeURI(req.query.url));
 
     if (response.headers["content-type"] !== "application/x-subrip")
       return res.status(400).send("Invalid content type");
