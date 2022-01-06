@@ -17,9 +17,9 @@ app.get("/", async (req, res) => {
     if (response.headers["content-type"] !== "application/x-subrip")
       return res.status(400).send("Invalid content type");
 
-    const { subtitle, status } = convert(response.data, ".vtt");
+    const { subtitle } = convert(response.data, ".vtt");
 
-    if (!status.success) return res.status(400).send("Cannot convert");
+    if (!subtitle) return res.status(400).send("Cannot convert");
 
     res.setHeader("content-type", "text/vtt");
 
