@@ -14,7 +14,7 @@ app.get("/", async (req, res) => {
 
     const response = await axios.get(encodeURI(req.query.url));
 
-    if (response.headers["content-type"] !== "application/x-subrip")
+    if (!response.headers["content-type"].startsWith("application/x-subrip") && !response.headers["content-type"].startsWith("srt"))
       return res.status(400).send("Invalid content type");
 
     const { subtitle } = convert(response.data, ".vtt");
